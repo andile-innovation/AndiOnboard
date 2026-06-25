@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: andionboard --default, light;
+}
+
+@plugin "daisyui/theme" {
+  name: "andionboard";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+
+  /* ─── UPDATED: Purple Pantone Background Canvas ─── */
+  --color-base-100: #141824;         /* Container backgrounds */
+  --color-base-200: #0d101a;         /* Inner block breaks */
+  --color-base-300: #6141a2;         /* SET TO PURPLE: Your brand canvas backdrop */
+  --color-base-content: #f1f2f4;     /* Crisp white text for perfect legibility over purple */
+
+  /* --- Core Brand Colors --- */
+  --color-primary: #fdc82f;          
+  --color-primary-content: #04060e;  
+  --color-secondary: #0075c9;        
+  --color-secondary-content: #ffffff;
+  --color-accent: #bbd64d;           /* Updated to your new Pantone Lime! */
+  --color-accent-content: #04060e;
+
+  /* --- Extended Tokens --- */
+  --color-pantone-lime: #bbd64d;
+  --color-pantone-purple: #6141a2;
+}
