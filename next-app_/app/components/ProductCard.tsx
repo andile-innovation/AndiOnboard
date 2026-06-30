@@ -1,24 +1,31 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 interface RoadmapResponse {
   user_profile: {
     name: string;
     role: string;
   };
-  
   generated_roadmap_text: string;
 }
 
-export default function Home() {
+// Explicit properties interface connecting back-navigation state context safely
+interface DashboardProps {
+  onBackToWelcome: () => void;
+}
+
+export default function ProductCard({ onBackToWelcome }: DashboardProps) {
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [roadmapData, setRoadmapData] = useState<RoadmapResponse | null>(null);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "about-us" | "careers" | "contact">("dashboard");
+  
+  // Tab control management node configuration
+  const [activeTab, setActiveTab] = useState<"dashboard" | "about-us" | "careers" | "contact" | "Lunch Time">("dashboard");
 
   const [contactMessage, setContactMessage] = useState("");
   const [submittingTicket, setSubmittingTicket] = useState(false);
@@ -129,13 +136,24 @@ export default function Home() {
         }
       `}} />
 
-      {/* HEADER: BRAND COLOR BLOCK (#3c233f + #ffc34c Anchor Line) */}
+      {/* HEADER: BRAND COLOR BLOCK (#a7a335 + #3c233f Anchor Line) */}
       <header className="p-6 shadow-sm no-print" style={{ backgroundColor: "#a7a335", borderBottom: "4px solid #3c233f" }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab("dashboard")}>
-            <div className="font-extrabold w-10 h-10 rounded-xl flex items-center justify-center text-lg shadow-md" style={{ backgroundColor: "#3c233f", color: "#ffffff" }}>И</div>
-            <span className="text-2xl font-bold tracking-tight text-white">AndiOnboard</span>
+          
+          {/* BACK LINK WITH STATE CLEANUP RESET */}
+          <div 
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                localStorage.removeItem("andionboard_screen");
+              }
+              onBackToWelcome();
+            }} 
+            className="flex items-center space-x-3 cursor-pointer group"
+          >
+            <div className="font-extrabold w-10 h-10 rounded-xl flex items-center justify-center text-lg shadow-md transform group-hover:rotate-6 transition-transform duration-200" style={{ backgroundColor: "#3c233f", color: "#ffffff" }}>И</div>
+            <span className="text-2xl font-bold tracking-tight text-white transition-colors duration-200 group-hover:text-[#3c233f]">AndiOnboard</span>
           </div>
+
           <button 
             onClick={() => window.location.href = "/admin/login"}
             className="text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm hover:opacity-90 cursor-pointer"
@@ -168,35 +186,34 @@ export default function Home() {
               />
             </div>
 
-       <div>
-          <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "#3c233f" }}>
-              Role
-            </label>
-            <select 
-              required 
-              disabled={loading || !!roadmapData} 
-              value={role} 
-              onChange={(e) => setRole(e.target.value)} 
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl outline-none text-sm focus:border-[#3c233f] disabled:opacity-60 bg-gray-50/50 appearance-none" 
-              style={{ color: "#3c233f" }}
-            >
-              <option value="" disabled hidden>Select target role</option>
-              <option value="Senior Software Engineer">Senior Software Engineer</option>
-              <option value="Junior Software Engineer">Junior Software Engineer</option>
-              <option value="Graduate Program for Software Engineer">Graduate Program for Software Engineer</option>
-              <option value="Graduate Program for System Analyst">Graduate Program for System Analyst</option>
-              <option value="Senior System Analyst">Senior System Analyst</option>
-              <option value="Junior System Analyst">Junior System Analyst</option>
-              <option value="Cloud Engineer">Cloud Engineer</option>
-            </select>
-          </div>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "#3c233f" }}>
+                Role
+              </label>
+              <select 
+                required 
+                disabled={loading || !!roadmapData} 
+                value={role} 
+                onChange={(e) => setRole(e.target.value)} 
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl outline-none text-sm focus:border-[#3c233f] disabled:opacity-60 bg-gray-50/50 appearance-none" 
+                style={{ color: "#3c233f" }}
+              >
+                <option value="" disabled hidden>Select target role</option>
+                <option value="Senior Software Engineer">Senior Software Engineer</option>
+                <option value="Junior Software Engineer">Junior Software Engineer</option>
+                <option value="Graduate Program for Software Engineer">Graduate Program for Software Engineer</option>
+                <option value="Graduate Program for System Analyst">Graduate Program for System Analyst</option>
+                <option value="Senior System Analyst">Senior System Analyst</option>
+                <option value="Junior System Analyst">Junior System Analyst</option>
+                <option value="Cloud Engineer">Cloud Engineer</option>
+              </select>
+            </div>
 
-           <div>
+            <div>
               <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "#3c233f" }}>
                 File upload
               </label>
               <div className="w-full px-3 py-2 border border-gray-200 rounded-xl flex items-center space-x-2 bg-gray-50/50">
-                {/* Upload Icon */}
                 <svg 
                   className={`w-5 h-5 flex-shrink-0 ${(loading || !!roadmapData) ? 'opacity-60' : ''}`}
                   fill="none" 
@@ -241,10 +258,10 @@ export default function Home() {
             )}
           </form>
 
-          <hr style={{ borderColor: "#e5e7e" }} />
+          <hr style={{ borderColor: "#e5e7eb" }} />
           
           <nav className="grid grid-cols-2 gap-y-2 text-xs font-bold">
-            {["dashboard", "about-us", "careers", "contact"].map((tab) => (
+            {["dashboard", "about-us", "careers", "contact", "Lunch Time"].map((tab) => (
               <button 
                 key={tab}
                 onClick={() => { setActiveTab(tab as any); if(tab === "contact") setTicketSubmitted(false); }} 
@@ -278,7 +295,7 @@ export default function Home() {
                   <div className="text-center space-y-4 max-w-md mx-auto no-print">
                     <span className="text-4xl block">🎯</span>
                     <h3 className="text-lg font-bold uppercase tracking-wide" style={{ color: "#3c233f" }}>Awaiting Profile Transmission</h3>
-                    <p className="text-sm leading-relaxed text-gray-400">Submit your profile metrics in the left-hand configuration card to compile a corporate gap analysis model.</p>
+                    <p className="text-sm leading-relaxed text-gray-500">Submit your profile metrics in the left-hand configuration card to compile a corporate gap analysis model.</p>
                   </div>
                 )}
 
@@ -286,7 +303,7 @@ export default function Home() {
                   <div className="space-y-6">
                     <div className="pb-4" style={{ borderBottom: "2px solid #ffc34c" }}>
                       <h3 className="text-xl font-extrabold tracking-tight" style={{ color: "#3c233f" }}>Tailored Professional Career Roadmap</h3>
-                      <p className="text-xs font-bold mt-1 text-gray-400 uppercase tracking-wider">Target Destination: {roadmapData.user_profile.role}</p>
+                      <p className="text-xs font-bold mt-1 text-gray-500 uppercase tracking-wider">Target Destination: {roadmapData.user_profile.role}</p>
                     </div>
                     <div className="prose prose-slate max-w-none text-sm leading-relaxed whitespace-pre-line font-normal" style={{ color: "#3c233f" }}>
                       {roadmapData.generated_roadmap_text}
@@ -299,14 +316,14 @@ export default function Home() {
             {activeTab === "about-us" && (
               <div className="space-y-4">
                 <h3 className="text-2xl font-extrabold tracking-tight pb-2" style={{ color: "#3c233f", borderBottom: "2px solid #ffc34c" }}>About AndiOnboard</h3>
-                <p className="text-sm leading-relaxed text-gray-600">AndiOnboard is an intelligent corporate internal career advancement architecture. By pairing high-performance Retrieval-Augmented Generation (RAG) through Pinecone with the reasoning capability of Gemini AI models, we allow centers of excellence to analyze background expertise gaps instantly against company benchmarks.</p>
+                <p className="text-sm leading-relaxed text-gray-700">AndiOnboard is an intelligent corporate internal career advancement architecture. By pairing high-performance Retrieval-Augmented Generation (RAG) through Pinecone with the reasoning capability of Gemini AI models, we allow centers of excellence to analyze background expertise gaps instantly against company benchmarks.</p>
               </div>
             )}
 
             {activeTab === "careers" && (
               <div className="space-y-4">
                 <h3 className="text-2xl font-extrabold tracking-tight pb-2" style={{ color: "#3c233f", borderBottom: "2px solid #ffc34c" }}>Careers at Centers of Excellence</h3>
-                <p className="text-sm leading-relaxed text-gray-600">Ready to transition into specialized high-proximity technological roles? Use the **Metrics Engine** layout panel to map your current technical certifications, engineering skillsets, and development methodologies to unlock active promotion pathways tailored to our team structural expansion targets.</p>
+                <p className="text-sm leading-relaxed text-gray-700">Ready to transition into specialized high-proximity technological roles? Use the **Metrics Engine** layout panel to map your current technical certifications, engineering skillsets, and development methodologies to unlock active promotion pathways tailored to our team structural expansion targets.</p>
               </div>
             )}
 
@@ -339,9 +356,171 @@ export default function Home() {
                 )}
               </div>
             )}
+
+            {/* LUNCH BREAK GRID COMPONENT */}
+            {activeTab === "Lunch Time" && (
+              <div className="space-y-8 w-full">
+                <div className="pb-3" style={{ borderBottom: "2px solid #ffc34c" }}>
+                  <h3 className="text-2xl font-extrabold tracking-tight" style={{ color: "#3c233f" }}>
+                    Rosebank Hub: Lunch & Dining Matrix
+                  </h3>
+                  <p className="text-xs font-medium text-gray-600 mt-1">
+                    Select a venue below to explore local culinary nodes and business lunch hotspots.
+                  </p>
+                </div>
+
+                {/* SECTION 1: TOP LUNCH SPOTS */}
+                <div className="space-y-4">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-gray-600">
+                    ━━ Top Lunch Spots
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    
+                    {/* Proud Mary */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Proud+Mary+Rosebank+Johannesburg"
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-5 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-3 mb-2">
+                        <span className="text-3xl block transform group-hover:scale-110 transition-transform">🥩</span>
+                        <span className="text-base font-black tracking-tight" style={{ color: "#000000" }}>Steak (Proud Mary)</span>
+                      </div>
+                      <p className="text-xs text-gray-700 leading-relaxed flex-1">
+                        A trendy spot serving great steaks, burgers, and drinks. It has a beautiful bar area that is perfect for business lunches.
+                      </p>
+                    </a>
+
+                    {/* Modern Tailors */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Modern+Tailors+Rosebank+Johannesburg" 
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-5 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-3 mb-2">
+                        <span className="text-3xl block transform group-hover:scale-110 transition-transform">🍛</span>
+                        <span className="text-base font-black tracking-tight" style={{ color: "#000000" }}>Curry (Modern Tailors)</span>
+                      </div>
+                      <p className="text-xs text-gray-700 leading-relaxed flex-1">
+                        Located in The Zone, this spot is highly recommended for flavorful modern Indian dishes and curries.
+                      </p>
+                    </a>
+
+                    {/* Momo Kuro */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Momo+Kuro+Rosebank+Johannesburg" 
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-5 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer relative"
+                    >
+                      <div className="flex items-center space-x-3 mb-2">
+                        <span className="text-3xl block transform group-hover:scale-110 transition-transform">🥢</span>
+                        <span className="text-base font-black tracking-tight" style={{ color: "#000000" }}>Sushi (Momo Kuro)</span>
+                      </div>
+                      <p className="text-xs text-gray-700 leading-relaxed flex-1">
+                        Popular for great Asian-fusion food. Note that it does not serve alcohol, but it is a "bring your own bottle" (BYOB) spot.
+                      </p>
+                      <span className="absolute top-3 right-3 text-[9px] font-extrabold px-1.5 py-0.5 rounded shadow-sm animate-pulse" style={{ backgroundColor: "#ffc34c", color: "#3c233f" }}>BYOB</span>
+                    </a>
+
+                    {/* Tashas */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Tashas+Rosebank+Johannesburg" 
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-5 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-3 mb-2">
+                        <span className="text-3xl block transform group-hover:scale-110 transition-transform">🥗</span>
+                        <span className="text-base font-black tracking-tight" style={{ color: "#000000" }}>Salad (Tashas)</span>
+                      </div>
+                      <p className="text-xs text-gray-700 leading-relaxed flex-1">
+                        A well-loved café with a light and healthy menu. It is famous for great breakfasts, salads, and toasted sandwiches.
+                      </p>
+                    </a>
+
+                    {/* Woolworths Cafe */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Woolworths+Cafe+Rosebank+Johannesburg" 
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-5 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-3 mb-2">
+                        <span className="text-3xl block transform group-hover:scale-110 transition-transform">🥐</span>
+                        <span className="text-base font-black tracking-tight" style={{ color: "#000000" }}>Coffee (Woolworths Cafe)</span>
+                      </div>
+                      <p className="text-xs text-gray-700 leading-relaxed flex-1">
+                        Located inside Rosebank Mall, this is a clean, reliable spot for fresh cafe-style meals, coffee, and pastries.
+                      </p>
+                    </a>
+
+                  </div>
+                </div>
+
+                {/* SECTION 2: QUICK & BUDGET-FRIENDLY BITES */}
+                <div className="space-y-4">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-gray-600">
+                    ━━ Quick & Budget-Friendly Bites
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    {/* RocoMamas */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=RocoMamas+Rosebank+Johannesburg" 
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-4 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer"
+                    >
+                      <span className="text-3xl block transform group-hover:scale-110 transition-transform mb-2">🍔</span>
+                      <span className="text-sm font-bold tracking-tight" style={{ color: "#3c233f" }}>RocoMamas</span>
+                      <p className="text-[11px] text-gray-600 mt-1 leading-normal">
+                        Known for huge, messy, and fully customizable American-style gourmet burgers and ribs.
+                      </p>
+                    </a>
+
+                    {/* Fugazzi */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Fugazzi+Rosebank+Johannesburg" 
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-4 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer"
+                    >
+                      <span className="text-3xl block transform group-hover:scale-110 transition-transform mb-2">🍕</span>
+                      <span className="text-sm font-bold tracking-tight" style={{ color: "#3c233f" }}>Fugazzi</span>
+                      <p className="text-[11px] text-gray-600 mt-1 leading-normal">
+                        A fun Italian spot perfect for grabbing a fresh slice or pasta on the go.
+                      </p>
+                    </a>
+
+                    {/* Now Now */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Now+Now+Rosebank+Johannesburg" 
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-4 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer"
+                    >
+                      <span className="text-3xl block transform group-hover:scale-110 transition-transform mb-2">🌯</span>
+                      <span className="text-sm font-bold tracking-tight" style={{ color: "#3c233f" }}>Now Now</span>
+                      <p className="text-[11px] text-gray-600 mt-1 leading-normal">
+                        A quick and easy food bar in Rosebank Mall featuring fresh, healthy wraps and lunch bowls.
+                      </p>
+                    </a>
+
+                    {/* Father Coffee */}
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Father+Coffee+Rosebank+Johannesburg" 
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex flex-col p-4 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-white hover:shadow-md hover:border-[#a7a335] transition-all group cursor-pointer"
+                    >
+                      <span className="text-3xl block transform group-hover:scale-110 transition-transform mb-2">☕</span>
+                      <span className="text-sm font-bold tracking-tight" style={{ color: "#3c233f" }}>Father Coffee</span>
+                      <p className="text-[11px] text-gray-600 mt-1 leading-normal">
+                        A cozy local shop in The Zone serving light snacks and some of the best coffee selections around town.
+                      </p>
+                    </a>
+
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* ─── WORKSPACE ACTION FOOTER (RESET & EXPORT CONTROLS) ─── */}
+          {/* WORKSPACE ACTION FOOTER */}
           {!loading && roadmapData && activeTab === "dashboard" && (
             <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-end space-x-3 no-print">
               <button
@@ -364,7 +543,7 @@ export default function Home() {
       </main>
 
       {/* FOOTER BLOCK */}
-      <footer className="py-6 px-8 text-center text-xs text-white border-t no-print" style={{ backgroundColor: "#a7a335", borderColor: "#6141a2" }}>
+      <footer className="py-6 px-8 text-center text-xs text-white border-t no-print" style={{ backgroundColor: "#a7a335", borderColor: "#3c233f" }}>
         © 2026 Andile. All rights reserved. <br />
         <span className="font-mono text-[10px] mt-1 block opacity-60">Internal Career Management Node.</span>
       </footer>
