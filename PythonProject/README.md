@@ -14,22 +14,23 @@ AI Engine: Google Gemini API
 
 Security: OAuth2 (JWT Bearer Token Validation Layer)
 
-### Quick Start & Installation
-#### 1. Install uv (If you haven't already)
-```text
-Bash
+### 🚀 Quick Start & Installation
+
+#### 1. Install `uv` (If you haven't already)
+```bash
 pip install uv
 
 #### 2. Create and Sync the Environment
 Run this in your root folder. uv will read your pyproject.toml and your uv.lock file to automatically spin up a virtual environment and lock down the exact module versions:
-```text
-Bash
+
+```Bash
 uv sync
 
 
 
 Configure Environment Parameters
 Create a .env file in the root project folder and supply your secret keys:
+
 ```text
 Code snippet
 DATABASE_URL=postgresql://postgres:secret@localhost:5432/andionboard
@@ -45,13 +46,14 @@ ADMIN_USERNAME=admin
 ADMIN_PASSWORD=your_secure_admin_password
 
 Initialize Database Schema
-```text
+
 # Run database migrations / initialization scripts
+```Bash
 uv run python vector_db.py
 
 #### Fire Up the Development Server
-```text
-Bash
+
+```Bash
 uvicorn app.main:app --reload
 
 The API engine will spin up locally at http://127.0.0.1:8000. You can explore the interactive API specification map natively at http://127.0.0.1:8000/docs.
