@@ -69,11 +69,11 @@ POST /api/tickets - Public endpoint allowing candidate nodes or web inquires to 
 
 ### System Architecture Tree
 PythonProject/
-├── Docker/                 # Environment deployment files
-├── main.py                 # Application root entry, CORS configurations, and routers
-├── model.py                # Database entity schemas and model structures
-├── vector_db.py            # Pinecone and RAG database interaction layer
-├── pyproject.toml          # Explicit project configuration and package definitions
-├── uv.lock                 # Strict dependency version tree lockfile
-├── .env                    # Production environmental parameters layout (secret)
-└── README.md               # Main repository documentation layer
+├── Docker/                 ###### Environment deployment files
+├── main.py                 ###### Application root entry, CORS configurations, and routers
+├── model.py                ###### Database entity schemas and model structures
+├── vector_db.py            ###### Pinecone and RAG database interaction layer
+├── pyproject.toml          ###### Explicit project configuration and package definitions
+├── uv.lock                 ###### Strict dependency version tree lockfile
+├── .env                    ###### Production environmental parameters layout (secret)
+└── README.md               ###### Main repository documentation layer
