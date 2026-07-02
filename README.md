@@ -20,4 +20,6 @@ The system could include a link to where new hires can see where to get lunch or
 
 AndiOnboard uses a Retrieval Augmented Generation(RAG) approach, when a new hire submits their skill profile, the system does not simply guess a roadmap; instead, it queries the Pinecone Vector Database, which contains pre-indexed documentation about Andile’s projects and roles. These retrieved documents act as “context” for the LLM, which then synthesizes a personalized ramp-up plan based on both the user’s current skills and the project’s specific requirements.
 
+# How to run the front-end
+
 
