@@ -69,7 +69,7 @@ POST /api/tickets - Public endpoint allowing candidate nodes or web inquires to 
 
 ### System Architecture Tree
 PythonProject/
-├── Docker/                 ###### Environment deployment files
+├── Docker/                 ''' Environment deployment files
 ├── main.py                 ###### Application root entry, CORS configurations, and routers
 ├── model.py                ###### Database entity schemas and model structures
 ├── vector_db.py            ###### Pinecone and RAG database interaction layer
