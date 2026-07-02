@@ -17,6 +17,7 @@ Security: OAuth2 (JWT Bearer Token Validation Layer)
 ### 🚀 Quick Start & Installation
 
 #### 1. Install `uv` (If you haven't already)
+
 ```bash
 pip install uv
 
@@ -31,8 +32,7 @@ uv sync
 Configure Environment Parameters
 Create a .env file in the root project folder and supply your secret keys:
 
-```text
-Code snippet
+```Code snippet
 DATABASE_URL=postgresql://postgres:secret@localhost:5432/andionboard
 
 WT_SECRET_KEY=your_super_secret_jwt_handshake_key_matrix
@@ -48,12 +48,15 @@ ADMIN_PASSWORD=your_secure_admin_password
 Initialize Database Schema
 
 # Run database migrations / initialization scripts
+
 ```Bash
+
 uv run python vector_db.py
 
 #### Fire Up the Development Server
 
 ```Bash
+
 uvicorn app.main:app --reload
 
 The API engine will spin up locally at http://127.0.0.1:8000. You can explore the interactive API specification map natively at http://127.0.0.1:8000/docs.
@@ -74,6 +77,7 @@ POST /api/tickets - Public endpoint allowing candidate nodes or web inquires to 
 ### 📁 Project Directory Structure
 
 ```text
+
 PythonProject/
 ├── Docker/                 # Environment deployment files
 ├── main.py                 # Application root entry, CORS configurations, and routers
