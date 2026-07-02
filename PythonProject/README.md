@@ -68,12 +68,12 @@ POST /api/tickets - Public endpoint allowing candidate nodes or web inquires to 
  Administrative Control Space (Secure Layer)Note: All endpoints below strictly require a valid header signature: Authorization: Bearer <admin_token>GET /api/admin/tickets - Retrieves the entire collection of active and resolved operational items from storage.PATCH /api/admin/tickets/{ticket_id}/status - Updates a target row status attribute parameter (Open $\leftrightarrow$ Resolved).
 
 ### System Architecture Tree
-PythonProject/
-├── Docker/                 ''' Environment deployment files
-├── main.py                 ###### Application root entry, CORS configurations, and routers
-├── model.py                ###### Database entity schemas and model structures
-├── vector_db.py            ###### Pinecone and RAG database interaction layer
-├── pyproject.toml          ###### Explicit project configuration and package definitions
-├── uv.lock                 ###### Strict dependency version tree lockfile
-├── .env                    ###### Production environmental parameters layout (secret)
-└── README.md               ###### Main repository documentation layer
+#### PythonProject/
+##### ├── Docker/                Environment deployment files
+##### ├── main.py                Application root entry, CORS configurations, and routers
+##### ├── model.py               Database entity schemas and model structures
+##### ├── vector_db.py           Pinecone and RAG database interaction layer
+##### ├── pyproject.toml         Explicit project configuration and package definitions
+##### ├── uv.lock                Strict dependency version tree lockfile
+##### ├── .env                   Production environmental parameters layout (secret)
+##### └── README.md              Main repository documentation layer
