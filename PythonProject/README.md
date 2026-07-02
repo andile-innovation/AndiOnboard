@@ -16,12 +16,13 @@ Security: OAuth2 (JWT Bearer Token Validation Layer)
 
 ### Quick Start & Installation
 #### 1. Install uv (If you haven't already)
+```text
 Bash
 pip install uv
 
 #### 2. Create and Sync the Environment
 Run this in your root folder. uv will read your pyproject.toml and your uv.lock file to automatically spin up a virtual environment and lock down the exact module versions:
-
+```text
 Bash
 uv sync
 
@@ -29,27 +30,27 @@ uv sync
 
 Configure Environment Parameters
 Create a .env file in the root project folder and supply your secret keys:
-
+```text
 Code snippet
 DATABASE_URL=postgresql://postgres:secret@localhost:5432/andionboard
 
-##### JWT_SECRET_KEY=your_super_secret_jwt_handshake_key_matrix
+WT_SECRET_KEY=your_super_secret_jwt_handshake_key_matrix
 
-##### PINECONE_API_KEY=your_pinecone_vector_index_key
+PINECONE_API_KEY=your_pinecone_vector_index_key
 
-##### GEMINI_API_KEY=your_google_gemini_llm_intelligence_key
+GEMINI_API_KEY=your_google_gemini_llm_intelligence_key
 
-##### ADMIN_USERNAME=admin
+ADMIN_USERNAME=admin
 
-##### ADMIN_PASSWORD=your_secure_admin_password
+ADMIN_PASSWORD=your_secure_admin_password
 
-#### Initialize Database Schema
-
-Bash
-##### Run database migrations / initialization scripts
-python app/db/init_db.py
+Initialize Database Schema
+```text
+# Run database migrations / initialization scripts
+uv run python vector_db.py
 
 #### Fire Up the Development Server
+```text
 Bash
 uvicorn app.main:app --reload
 
