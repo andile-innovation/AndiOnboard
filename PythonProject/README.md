@@ -19,9 +19,9 @@ git clone <your-repository-url>
 cd andionboard-backend
 python -m venv venv
 
-#Activate on Windows:
+##### Activate on Windows:
 .\venv\Scripts\activate
-#Activate on macOS/Linux:
+##### Activate on macOS/Linux:
 source venv/bin/activate
 
 Install Project Dependencies
@@ -41,7 +41,7 @@ ADMIN_PASSWORD=your_secure_admin_password
 
 Initialize Database Schema
 Bash
-#Run database migrations / initialization scripts
+##### Run database migrations / initialization scripts
 python app/db/init_db.py
 
 Fire Up the Development Server
